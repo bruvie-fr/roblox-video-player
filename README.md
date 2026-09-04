@@ -45,8 +45,8 @@ The stats overlay shows which one is live — `[editableimage]` or `[framegrid]`
 
 - `ffmpeg` and `ffprobe` on PATH
 - Python 3.11+ : `pip install numpy pillow fastapi uvicorn pydantic yt-dlp`
-- In Studio, **Game Settings -> Security**: enable **Allow HTTP Requests**, and
-  **Allow Mesh / Image APIs** for sharp rendering (needs a 13+ ID-verified
+- In Studio, **Game Settings -> Security**: enable **Allow HTTP Requests**.
+- OPTIONAL - **Allow Mesh / Image APIs** for sharp rendering (needs a 13+ ID-verified
   account; without it the player falls back to a coarser mode automatically)
 
 ## Quick start
