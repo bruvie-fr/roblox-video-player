@@ -1,0 +1,34 @@
+# Generated test clips and downloaded sources -- large, and reproducible from
+# encoder/source.py (make_test_clip / resolve).
+_testdata/
+_downloads/
+_stems/
+_build/
+
+# Session credentials. A TikTok cookies file contains sessionid/sid_guard,
+# which grant full account access without a password or 2FA -- never commit it.
+cookies.txt
+cookies.json
+*.cookies.txt
+*.cookies.json
+
+__pycache__/
+*.pyc
+
+# Rojo build output
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+
+# Vendored ML model weights (76 MB) for the retired transcription pipeline.
+# Nothing in the live encode path loads them -- server.py imports none of it --
+# and they carry their own upstream licences, which would otherwise attach
+# themselves to this repository's terms. Kept on disk, out of the repo.
+encoder/models/
+
+*.bak
+
+.env
+.env.*
+.impeccable/

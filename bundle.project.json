@@ -1,0 +1,28 @@
+{
+  "name": "MainModule",
+  "tree": {
+    "$path": "src/bundle/MainModule.luau",
+
+    "ServerScript": {
+      "$path": "src/server/StreamServer.server.luau",
+      "$properties": {
+        "Disabled": true
+      }
+    },
+
+    "Shared": {
+      "$className": "Folder",
+      "Config": { "$path": "src/shared/Config.luau" },
+      "Protocol": { "$path": "src/shared/Protocol.luau" }
+    },
+
+    "ClientBundle": {
+      "$className": "Folder",
+      "VideoPlayer": { "$path": "src/client/VideoPlayer.client.luau" },
+      "WavPlayer": { "$path": "src/client/WavPlayer.luau" },
+      "ControlPanel": { "$path": "src/client/ControlPanel.luau" },
+      "Decoder": { "$path": "src/client/Decoder.luau" },
+      "Renderer": { "$path": "src/client/Renderer.luau" }
+    }
+  }
+}
