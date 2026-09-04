@@ -62,10 +62,13 @@ local function bufferedSeconds(): number
 	return queuedFrames / math.max(videoFps, 1)
 end
 
+local streamEnded = false
+
 local function clearStream()
 	table.clear(queue)
 	queuedFrames = 0
 	playing = false
+	streamEnded = false
 end
 
 local function teardown()
@@ -118,10 +121,7 @@ control.OnClientEvent:Connect(function(msg)
 	end
 
 	if msg.action == "ended" then
-
-		teardown()
-		panel:setBusy(false)
-		panel:setStatus("finished -- paste a link to play something else")
+		streamEnded = true
 		return
 	end
 
@@ -305,6 +305,13 @@ RunService.Heartbeat:Connect(function(dt)
 			playing = false
 			nextFrameClock = now
 		end
+	end
+
+	if streamEnded and queuedFrames <= 0 then
+		teardown()
+		panel:setBusy(false)
+		panel:setStatus("finished -- paste a link to play something else")
+		return
 	end
 
 	if SHOW_STATS then
