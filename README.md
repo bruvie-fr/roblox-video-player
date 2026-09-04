@@ -14,12 +14,32 @@ Typical stream: **768x432 at 30 fps, ~100 KB/s**, with sound.
 A small Python service downloads the video, encodes it into a compact block
 format, and serves it over HTTP. The Roblox server polls that service and fans
 the bytes out to every player, so bandwidth is the same whether one person is
-watching or fifty. The client decodes each frame into a single `EditableImage`.
+watching or fifty. The client decodes each frame and draws it.
 
 ```
   Python encoder  --HTTP-->  Roblox server  --RemoteEvent-->  Roblox client
    yt-dlp/ffmpeg              poll + fanout                    decode + draw
 ```
+
+## Two ways of drawing it
+
+The renderer picks a backend at runtime, per player:
+
+- **`EditableImage`** — one image, pixels written straight into it. Sharp and
+  cheap: around 0.1–3 ms to decode a frame. This is the good path.
+- **Frame grid** — a grid of `Frame` objects, one per pixel block, capped at
+  192x108 (20,736 Frames). Coarse and much heavier, but it works.
+
+The fallback exists because enabling **Allow Mesh / Image APIs** requires a 13+
+ID-verified account, and plenty of places can't. Without it, those players would
+otherwise see nothing at all.
+
+Detection deliberately *writes* a pixel rather than just creating the image:
+`CreateEditableImage` succeeds even when the API is disabled, and only the write
+fails. Checking creation alone gives you a renderer that looks fine and then
+throws once per frame forever.
+
+The stats overlay shows which one is live — `[editableimage]` or `[framegrid]`.
 
 ## Requirements
 
